@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UIWebViewDelegate>{
+@private
+    __weak IBOutlet UIWebView *paymentView;
+}
 
 @end

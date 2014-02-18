@@ -56,7 +56,6 @@
 		349DB54F18B371D800D87E8F /* MondidoIOS-SDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MondidoIOS-SDKTests-Info.plist"; sourceTree = "<group>"; };
 		349DB55118B371D800D87E8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		349DB55318B371D800D87E8F /* MondidoIOS_SDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MondidoIOS_SDKTests.m; sourceTree = "<group>"; };
-		349DB55D18B37FED00D87E8F /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		349DB55F18B3949600D87E8F /* MondidoBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondidoBase.h; sourceTree = "<group>"; };
 		349DB56018B3949600D87E8F /* MondidoBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MondidoBase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,7 +126,6 @@
 				349DB53E18B371D800D87E8F /* ViewController.m */,
 				349DB54018B371D800D87E8F /* Images.xcassets */,
 				349DB52C18B371D800D87E8F /* Supporting Files */,
-				349DB55D18B37FED00D87E8F /* Model.h */,
 			);
 			path = "MondidoIOS-SDK";
 			sourceTree = "<group>";
