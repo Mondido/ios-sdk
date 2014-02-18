@@ -22,6 +22,7 @@
 		349DB54A18B371D800D87E8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 349DB52918B371D800D87E8F /* UIKit.framework */; };
 		349DB55218B371D800D87E8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 349DB55018B371D800D87E8F /* InfoPlist.strings */; };
 		349DB55418B371D800D87E8F /* MondidoIOS_SDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DB55318B371D800D87E8F /* MondidoIOS_SDKTests.m */; };
+		349DB56118B3949600D87E8F /* MondidoBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DB56018B3949600D87E8F /* MondidoBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		349DB55118B371D800D87E8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		349DB55318B371D800D87E8F /* MondidoIOS_SDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MondidoIOS_SDKTests.m; sourceTree = "<group>"; };
 		349DB55D18B37FED00D87E8F /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		349DB55F18B3949600D87E8F /* MondidoBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MondidoBase.h; sourceTree = "<group>"; };
+		349DB56018B3949600D87E8F /* MondidoBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MondidoBase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,7 @@
 		349DB52B18B371D800D87E8F /* MondidoIOS-SDK */ = {
 			isa = PBXGroup;
 			children = (
+				349DB55E18B3944F00D87E8F /* Lib */,
 				349DB53418B371D800D87E8F /* AppDelegate.h */,
 				349DB53518B371D800D87E8F /* AppDelegate.m */,
 				349DB53718B371D800D87E8F /* Main_iPhone.storyboard */,
@@ -155,6 +159,15 @@
 				349DB55018B371D800D87E8F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		349DB55E18B3944F00D87E8F /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				349DB55F18B3949600D87E8F /* MondidoBase.h */,
+				349DB56018B3949600D87E8F /* MondidoBase.m */,
+			);
+			name = Lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +217,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Mondido Payments";
 				TargetAttributes = {
+					349DB52118B371D800D87E8F = {
+						DevelopmentTeam = W52596F27C;
+					};
 					349DB54518B371D800D87E8F = {
 						TestTargetID = 349DB52118B371D800D87E8F;
 					};
@@ -256,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349DB53F18B371D800D87E8F /* ViewController.m in Sources */,
+				349DB56118B3949600D87E8F /* MondidoBase.m in Sources */,
 				349DB53618B371D800D87E8F /* AppDelegate.m in Sources */,
 				349DB53218B371D800D87E8F /* main.m in Sources */,
 			);
@@ -394,10 +411,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MondidoIOS-SDK/MondidoIOS-SDK-Prefix.pch";
 				INFOPLIST_FILE = "MondidoIOS-SDK/MondidoIOS-SDK-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -407,10 +427,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MondidoIOS-SDK/MondidoIOS-SDK-Prefix.pch";
 				INFOPLIST_FILE = "MondidoIOS-SDK/MondidoIOS-SDK-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
