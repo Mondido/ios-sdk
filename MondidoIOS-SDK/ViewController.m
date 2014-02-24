@@ -30,7 +30,6 @@ MondidoBase *mondido;
     mondido.currency = @"SEK";
     mondido.merchant_id = @"5";
     mondido.secret = @"$2a$10$5OGLq7v86uROMbF3Yfi3kO"; // should not store secret in app.
-    mondido.datetime = @"2014-09-21:01:01:01:000";
     mondido.order_id = @"test1";
     mondido.hash = @"";
     mondido.success_url = @"https://mondido.com/success";

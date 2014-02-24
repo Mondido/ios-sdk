@@ -35,7 +35,7 @@
     }
 
 - (NSString *) createHash{
-    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@%@",merchant_id,order_id,amount,datetime,secret]];
+    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,order_id,amount,secret]];
 }
 
 - (NSString *) md5:(NSString *) input
@@ -58,7 +58,6 @@
                                     amount, @"amount",
                                     currency, @"currency",
                                     merchant_id, @"merchant_id",
-                                    datetime, @"datetime",
                                     order_id, @"order_id",
                                     hash, @"hash",
                                     success_url, @"success_url",
