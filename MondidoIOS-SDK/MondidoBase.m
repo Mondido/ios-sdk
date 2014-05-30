@@ -4,7 +4,7 @@
 //
 //  Created by Robert Pohl on 18/02/14.
 //  Copyright (c) 2014 Mondido Payments. All rights reserved.
-//  Version 1.0
+//  Version 1.1
 
 #import "MondidoBase.h"
 #import <CommonCrypto/CommonDigest.h>
@@ -12,14 +12,15 @@
 
 @implementation MondidoBase
 
-    @synthesize merchant_id,amount,currency,datetime,order_id,hash,payUrl,error_url,meta_data,success_url,test,secret,template_id;
-    ASCompletionBlock paymentCallback;
+@synthesize merchant_id,amount,currency,datetime,payment_ref,customer_ref,hash,payUrl,error_url,meta_data,success_url,test,secret,template_id;
+ASCompletionBlock paymentCallback;
+ASCompletionBlock readyCallback;
 
 -(id) init{
     self = [super init];
     if(self)
     {
-       meta_data = [[NSMutableDictionary alloc]init];
+        meta_data = [[NSMutableDictionary alloc]init];
     }
     return self;
 }
@@ -32,10 +33,10 @@
 - (NSString *) randomOrderId{
     int r = arc4random() % 500;
     return [@"test" stringByAppendingFormat:@"%d",r];
-    }
+}
 
 - (NSString *) createHash{
-    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,order_id,amount,secret]];
+    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,payment_ref,amount,secret]];
 }
 
 - (NSString *) md5:(NSString *) input
@@ -51,24 +52,28 @@
     
     return  output;
 }
+- (void) setReadyCallback:(ASCompletionBlock)callback{
+    readyCallback = callback;
+}
 
 - (void) makeHostedPayment:(UIWebView *)theWebView withCallback:(ASCompletionBlock)callback{
     theWebView.delegate = self;
     NSMutableDictionary *postDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                    amount, @"amount",
-                                    currency, @"currency",
-                                    merchant_id, @"merchant_id",
-                                    order_id, @"order_id",
-                                    hash, @"hash",
-                                    success_url, @"success_url",
-                                    error_url, @"error_url",
-                                    test, @"test",
-                                    nil];
-
+                                           amount, @"amount",
+                                           currency, @"currency",
+                                           merchant_id, @"merchant_id",
+                                           payment_ref, @"payment_ref",
+                                           customer_ref, @"customer_ref",
+                                           hash, @"hash",
+                                           success_url, @"success_url",
+                                           error_url, @"error_url",
+                                           test, @"test",
+                                           nil];
+    
     //loop meta_data and add those to the post
     for (NSString* key in meta_data) {
         id value = [meta_data objectForKey:key];
-         [postDictionary setObject:value forKey:key];
+        [postDictionary setObject:value forKey:key];
     }
     
     NSURL *url                          = [NSURL URLWithString:self.payUrl];
@@ -170,13 +175,14 @@
     
     
     if([currentUrl rangeOfString:@"status=approved"].location != NSNotFound){
-         NSLog(@"payment success");
+        NSLog(@"payment success");
         paymentCallback(SUCCESS);
     }else if([currentUrl rangeOfString:@"status=declined"].location != NSNotFound){
         NSLog(@"payment fail");
         paymentCallback(FAILED);
     }else if([currentUrl isEqualToString:payUrl]){
-        NSLog(@"payment staring");
+        NSLog(@"payment starting");
+        readyCallback(1);
         //start
     }else{
         NSLog(@"payment error");

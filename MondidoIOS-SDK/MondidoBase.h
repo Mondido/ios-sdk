@@ -19,14 +19,15 @@ enum PaymentStatus : NSInteger {
 
 
 @interface MondidoBase : NSObject<UIWebViewDelegate>{
-
+    
 }
 @property (nonatomic, retain) NSString *payUrl;
 @property (nonatomic, retain) NSString *amount;
 @property (nonatomic, retain) NSString *currency;
 @property (nonatomic, retain) NSString *merchant_id;
 @property (nonatomic, retain) NSString *datetime;
-@property (nonatomic, retain) NSString *order_id;
+@property (nonatomic, retain) NSString *payment_ref;
+@property (nonatomic, retain) NSString *customer_ref;
 @property (nonatomic, retain) NSString *hash;
 @property (nonatomic, retain) NSString *success_url;
 @property (nonatomic, retain) NSString *error_url;
@@ -43,6 +44,7 @@ enum PaymentStatus : NSInteger {
 typedef void (^ASCompletionBlock)(NSInteger status);
 
 - (void)makeHostedPayment:(UIWebView *)webView withCallback:(ASCompletionBlock)callback;
+- (void)setReadyCallback:(ASCompletionBlock)callback;
 
 @end
 
