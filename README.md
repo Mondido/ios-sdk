@@ -9,8 +9,8 @@ Open the included demo application and see how it works.
 
 Example:
 
-´- (void)viewDidLoad
-{
+    - (void)viewDidLoad
+    {
     [super viewDidLoad];
 
     mondido = [[MondidoBase alloc] init];
@@ -44,5 +44,4 @@ Example:
             //problems
         }
      }];
-}
-´
+    }
