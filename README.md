@@ -33,6 +33,7 @@ Example:
     mondido.error_url = @"https://mondido.com/fail";
     mondido.test = @"true";
     mondido.payment_ref = mondido.randomOrderId; //just for testing. remove in production.
+    mondido.webhook = @"{\"trigger\":\"payment_success\",\"email\":\"myemail+ios@gmail.com
     mondido.hash = mondido.createHash; //should be loaded from backend
     paymentView = mondido.createWebView; //create one here instead of storyboard/xib
     [self.view addSubview:paymentView]; //add view to stage. default is streatched over the whole screen.
