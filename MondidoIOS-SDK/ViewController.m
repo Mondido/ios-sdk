@@ -29,7 +29,7 @@ MondidoBase *mondido;
     mondido.amount = @"1.00";
     mondido.currency = @"SEK";
     mondido.merchant_id = @"1";
-    mondido.secret = @"$2a$10$D99a9L09Yu7sZvWMhZq5n."; // should not store secret in app.
+    mondido.secret = @"$2a$10$D99a9L0sdfssdZvWMhZq5n."; // should not store secret in app.
     mondido.payment_ref = @"test1";
     mondido.hash = @"";
     mondido.success_url = @"https://mondido.com/success";
