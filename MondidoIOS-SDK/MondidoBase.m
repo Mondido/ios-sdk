@@ -12,7 +12,7 @@
 
 @implementation MondidoBase
 
-    @synthesize merchant_id,amount,currency,datetime,order_id,hash,payUrl,error_url,meta_data,success_url,test,secret,template_id;
+    @synthesize merchant_id,amount,currency,datetime,payment_ref,hash,payUrl,error_url,meta_data,success_url,test,secret,template_id,webhook,customer_ref,plan_id,subscription_quantity;
     ASCompletionBlock paymentCallback;
 
 -(id) init{
@@ -35,7 +35,7 @@
     }
 
 - (NSString *) createHash{
-    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,order_id,amount,secret]];
+    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,payment_ref,amount,secret]];
 }
 
 - (NSString *) md5:(NSString *) input
@@ -58,11 +58,16 @@
                                     amount, @"amount",
                                     currency, @"currency",
                                     merchant_id, @"merchant_id",
-                                    order_id, @"order_id",
+                                    payment_ref, @"payment_ref",
                                     hash, @"hash",
                                     success_url, @"success_url",
                                     error_url, @"error_url",
                                     test, @"test",
+                                    webhook, @"webhook",
+                                    plan_id, @"plan_id",
+                                    subscription_quantity, @"subscription_quantity",
+                                    customer_ref, @"customer_ref",
+
                                     nil];
 
     //loop meta_data and add those to the post

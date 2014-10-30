@@ -26,7 +26,7 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *currency;
 @property (nonatomic, retain) NSString *merchant_id;
 @property (nonatomic, retain) NSString *datetime;
-@property (nonatomic, retain) NSString *order_id;
+@property (nonatomic, retain) NSString *payment_ref;
 @property (nonatomic, retain) NSString *hash;
 @property (nonatomic, retain) NSString *success_url;
 @property (nonatomic, retain) NSString *error_url;
@@ -34,6 +34,13 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *test;
 @property (nonatomic, retain) NSString *secret;
 @property (nonatomic, retain) NSString *template_id;
+@property (nonatomic, retain) NSString *customer_ref;
+@property (nonatomic, retain) NSString *webhook;
+@property (nonatomic, retain) NSString *plan_id;
+@property (nonatomic, retain) NSString *subscription_quantity;
+
+
+
 
 - (NSString *) md5:NSString;
 - (NSString *) randomOrderId;
