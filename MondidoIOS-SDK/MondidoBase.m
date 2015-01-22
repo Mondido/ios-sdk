@@ -35,7 +35,7 @@
     }
 
 - (NSString *) createHash{
-    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@",merchant_id,payment_ref,amount,secret]];
+    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@%@%@%@",merchant_id,payment_ref,customer_ref,amount,currency,( [test isEqualToString:@"true"] ? "test" : "" ),secret]];
 }
 
 - (NSString *) md5:(NSString *) input
