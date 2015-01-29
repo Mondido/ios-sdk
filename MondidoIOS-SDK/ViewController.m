@@ -31,6 +31,7 @@ MondidoBase *mondido;
     mondido.merchant_id = @"1";
     mondido.secret = @"$2a$10$sdgrweg."; // should not store secret in app.
     mondido.payment_ref = @"test1";
+    mondido.customer_ref = @"customer1";
     mondido.hash = @"";
     mondido.success_url = @"https://mondido.com/success";
     mondido.error_url = @"https://mondido.com/fail";

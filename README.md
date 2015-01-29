@@ -28,6 +28,7 @@ Example:
     mondido.merchant_id = @"5";
     mondido.secret = @"$2a$10$5OGLq7v86uROMbF3Yfi3kO"; // should not store secret in app.
     mondido.payment_ref = @"test1";
+    mondido.customer_ref = @"customer1";
     mondido.hash = @"";
     mondido.success_url = @"https://mondido.com/success";
     mondido.error_url = @"https://mondido.com/fail";
