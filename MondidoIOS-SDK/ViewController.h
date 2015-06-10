@@ -10,7 +10,7 @@
 
 @interface ViewController : UIViewController <UIWebViewDelegate>{
 @private
-    __weak IBOutlet UIWebView *paymentView;
+    IBOutlet UIWebView *paymentView;
 }
 
 @end

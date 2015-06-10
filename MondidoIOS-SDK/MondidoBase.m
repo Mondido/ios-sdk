@@ -12,7 +12,7 @@
 
 @implementation MondidoBase
 
-    @synthesize merchant_id,amount,currency,datetime,payment_ref,hash,payUrl,error_url,meta_data,success_url,test,secret,template_id,webhook,customer_ref,plan_id,subscription_quantity;
+    @synthesize merchant_id,amount,currency,datetime,payment_ref,mondido_hash,payUrl,error_url,meta_data,success_url,test,secret,template_id,webhook,customer_ref,plan_id,subscription_quantity;
     ASCompletionBlock paymentCallback;
 
 -(id) init{
@@ -35,14 +35,26 @@
     }
 
 - (NSString *) createHash{
-    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@%@%@%@",merchant_id,payment_ref,customer_ref,amount,currency,( [test isEqualToString:@"true"] ? "test" : "" ),secret]];
+    NSString *test_val;
+    test_val = @"";
+    if ([test isEqualToString:@"true"]){
+       test_val = @"test";
+    }
+    return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@%@%@%@",
+                      merchant_id,
+                      payment_ref,
+                      customer_ref,
+                      amount,
+                      currency,
+                      test_val,
+                      secret]];
 }
 
 - (NSString *) md5:(NSString *) input
 {
     const char *cStr = [input UTF8String];
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
-    CC_MD5( cStr, strlen(cStr), digest ); // This is the md5 call
+    CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
     
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
     
@@ -54,22 +66,28 @@
 
 - (void) makeHostedPayment:(UIWebView *)theWebView withCallback:(ASCompletionBlock)callback{
     theWebView.delegate = self;
-    NSMutableDictionary *postDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                    amount, @"amount",
-                                    currency, @"currency",
-                                    merchant_id, @"merchant_id",
-                                    payment_ref, @"payment_ref",
-                                    hash, @"hash",
-                                    success_url, @"success_url",
-                                    error_url, @"error_url",
-                                    test, @"test",
-                                    webhook, @"webhook",
-                                    plan_id, @"plan_id",
-                                    subscription_quantity, @"subscription_quantity",
-                                    customer_ref, @"customer_ref",
-
-                                    nil];
-
+    NSMutableDictionary *postDictionary = [[NSMutableDictionary alloc]init];
+    [postDictionary setObject:amount forKey:@"amount"];
+    [postDictionary setObject:currency forKey:@"currency"];
+    [postDictionary setObject:merchant_id forKey:@"merchant_id"];
+    [postDictionary setObject:payment_ref forKey:@"payment_ref"];
+    [postDictionary setObject:mondido_hash forKey:@"hash"];
+    [postDictionary setObject:success_url forKey:@"success_url"];
+    [postDictionary setObject:error_url forKey:@"error_url"];
+    [postDictionary setObject:test forKey:@"test"];
+    if(plan_id != nil){
+        [postDictionary setObject:plan_id forKey:@"plan_id"];
+    }
+    if (subscription_quantity != nil) {
+        [postDictionary setObject:subscription_quantity forKey:@"amosubscription_quantityunt"];
+    }
+    if (customer_ref != nil) {
+        [postDictionary setObject:customer_ref forKey:@"customer_ref"];
+    }
+    if (webhook != nil) {
+        [postDictionary setObject:webhook forKey:@"webhook"];
+    }
+    
     //loop meta_data and add those to the post
     for (NSString* key in meta_data) {
         id value = [meta_data objectForKey:key];
@@ -86,7 +104,7 @@
     if(postDictionary) {
         NSString *postString                = [self getFormDataString:postDictionary];
         NSData *postData                    = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        NSString *postLength                = [NSString stringWithFormat:@"%d", [postData length]];
+        NSString *postLength                = [NSString stringWithFormat:@"%ld", (unsigned long)[postData length]];
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -181,7 +199,7 @@
         NSLog(@"payment fail");
         paymentCallback(FAILED);
     }else if([currentUrl isEqualToString:payUrl]){
-        NSLog(@"payment staring");
+        NSLog(@"payment starting");
         //start
     }else{
         NSLog(@"payment error");
@@ -198,8 +216,4 @@
 {
     NSLog(@"error is %@", [error localizedDescription]);
 }
-
-
-
-
 @end

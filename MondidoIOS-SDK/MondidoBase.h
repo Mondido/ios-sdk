@@ -27,7 +27,7 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *merchant_id;
 @property (nonatomic, retain) NSString *datetime;
 @property (nonatomic, retain) NSString *payment_ref;
-@property (nonatomic, retain) NSString *hash;
+@property (nonatomic, retain) NSString *mondido_hash;
 @property (nonatomic, retain) NSString *success_url;
 @property (nonatomic, retain) NSString *error_url;
 @property (nonatomic, retain) NSMutableDictionary *meta_data;
