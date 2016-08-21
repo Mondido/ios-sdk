@@ -8,7 +8,7 @@ The iOS SDK provides developers with a easy-to-use library to make payments in t
 Open the included demo application and see how it works.
 
 Example:
-
+```
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,3 +44,4 @@ Example:
         }
      }];
 }
+```
