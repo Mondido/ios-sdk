@@ -12,7 +12,28 @@
 
 @implementation MondidoBase
 
-    @synthesize merchant_id,amount,currency,datetime,payment_ref,mondido_hash,payUrl,error_url,meta_data,success_url,test,secret,template_id,webhook,customer_ref,plan_id,subscription_quantity;
+    @synthesize merchant_id,
+        amount,currency,
+        datetime,
+        payment_ref,
+        mondido_hash,
+        payUrl,
+        error_url,
+        meta_data,
+        success_url,
+        test,
+        secret,
+        template_id,
+        webhook,
+        customer_ref,
+        plan_id,
+        subscription_quantity,
+        subscription_items,
+        items,
+        authorize,
+        store_card,
+        vat_amount;
+
     ASCompletionBlock paymentCallback;
 
 -(id) init{
@@ -40,6 +61,7 @@
     if ([test isEqualToString:@"true"]){
        test_val = @"test";
     }
+    
     return [self md5:[@"" stringByAppendingFormat:@"%@%@%@%@%@%@%@",
                       merchant_id,
                       payment_ref,
@@ -86,8 +108,24 @@
     }
     if (webhook != nil) {
         [postDictionary setObject:webhook forKey:@"webhook"];
+
     }
-    
+    if (subscription_items != nil) {
+        [postDictionary setObject:subscription_items forKey:@"subscription_items"];
+    }
+    if (items != nil) {
+        [postDictionary setObject:items forKey:@"items"];
+    }
+    if (authorize != nil) {
+        [postDictionary setObject:authorize forKey:@"authorize"];
+    }
+    if (store_card != nil) {
+        [postDictionary setObject:store_card forKey:@"store_card"];
+    }
+    if (vat_amount != nil) {
+        [postDictionary setObject:vat_amount forKey:@"vat_amount"];
+    }
+
     //loop meta_data and add those to the post
     for (NSString* key in meta_data) {
         id value = [meta_data objectForKey:key];

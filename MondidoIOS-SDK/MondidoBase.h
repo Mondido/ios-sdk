@@ -39,6 +39,12 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *plan_id;
 @property (nonatomic, retain) NSString *subscription_quantity;
 
+@property (nonatomic, retain) NSString *subscription_items;
+@property (nonatomic, retain) NSString *items;
+@property (nonatomic, retain) NSString *authorize;
+@property (nonatomic, retain) NSString *store_card;
+@property (nonatomic, retain) NSString *vat_amount;
+
 
 
 

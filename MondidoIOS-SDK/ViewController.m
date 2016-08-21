@@ -29,17 +29,33 @@ MondidoBase *mondido;
     mondido.payUrl = @"https://pay.mondido.com/v1/form?lang=en";
     mondido.amount = @"1.00";
     mondido.currency = @"sek"; //must be in lower case
-    mondido.merchant_id = @"233";
-    mondido.secret = @"$2a$10$gU.z.9QNc8VSGYqcJSOhv."; // should not store secret in app.
+    mondido.merchant_id = @"470";
+    mondido.secret = @"$2a$10$SZ32pF1xgUek/8UMO/NHzu"; // should not store secret in app.
     mondido.payment_ref = @"test1";
     mondido.customer_ref = @"customer1";
     mondido.mondido_hash = @"";
-    mondido.success_url = @"https://mondido.com/success";
-    mondido.error_url = @"https://mondido.com/fail";
+    mondido.success_url = @"https://pay.mondido.com/success";
+    mondido.error_url = @"https://pay.mondido.com/fail";
     mondido.test = @"true";
     mondido.webhook = @"{\"trigger\":\"payment_success\",\"email\":\"youremail+ios@gmail.com\"}";
     mondido.payment_ref = mondido.randomOrderId; //just for testing. remove in production.
     mondido.mondido_hash = mondido.createHash; //should be loaded from backend
+    
+//    uncomment these if you want to start a subscription
+//    mondido.plan_id = @"1";
+//    mondido.subscription_items = @"{\"artno\": \"001\", \"amount\": 1, \"description\": \"user license2\", \"qty\": 1, \"vat\": 25, \"discount\": 0}]";
+    
+    // uncomment items if you want to send make invoice payment
+    mondido.items = @"[{\"artno\": \"001\", \"amount\": 1, \"description\": \"user license2\", \"qty\": 1, \"vat\": 25, \"discount\": 0}]";
+    
+    // authorize = true means to reserve a payment
+    mondido.authorize = @"false";
+    
+    // store card to use a token for next payments
+    mondido.store_card = @"false";
+    
+    mondido.vat_amount = @"0.00";
+    
     paymentView = mondido.createWebView; //create one here instead of storyboard/xib
     [self.view addSubview:paymentView]; //add view to stage. default is streatched over the whole screen.
     
