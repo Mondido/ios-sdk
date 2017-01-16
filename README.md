@@ -7,6 +7,13 @@ Version 1.3
 The iOS SDK provides developers with a easy-to-use library to make payments in their iOS application. 
 Open the included demo application and see how it works.
 
+UPDATE   
+If you are targeting newer IOS versions, Apple require higher level of security and also IPV6.
+Use this IPV6/IPV4 and TLS1.2 only, URL for POST payment.
+```
+mondido.payUrl = @"https://pay-dual.mondido.com/v1/form?lang=en";
+```
+
 Example:
 ```
 - (void)viewDidLoad
