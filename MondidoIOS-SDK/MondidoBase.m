@@ -40,13 +40,13 @@
     self = [super init];
     if(self)
     {
-       meta_data = [[NSMutableDictionary alloc]init];
+       meta_data = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
-- (UIWebView*)createWebView{
+- (WKWebView*)createWebView {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:screenRect];  //Change self.view.bounds to a smaller CGRect if you don't want it to take up the whole screen
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:screenRect];  //Change self.view.bounds to a smaller CGRect if you don't want it to take up the whole screen
     return webView;
 }
 
@@ -81,13 +81,13 @@
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
     
     for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
-        [output appendFormat:@"%02x", digest[i]];
+       [output appendFormat:@"%02x", digest[i]];
     
     return  output;
 }
 
-- (void) makeHostedPayment:(UIWebView *)theWebView withCallback:(ASCompletionBlock)callback{
-    theWebView.delegate = self;
+- (void) makeHostedPayment:(WKWebView *)theWebView withCallback:(ASCompletionBlock)callback{
+    theWebView.navigationDelegate = self;
     NSMutableDictionary *postDictionary = [[NSMutableDictionary alloc]init];
     [postDictionary setObject:amount forKey:@"amount"];
     [postDictionary setObject:currency forKey:@"currency"];
@@ -181,19 +181,12 @@
     if(string == nil || [string isEqualToString:@""]) {
         return @"";
     }
-    NSString *outString     = [NSString stringWithString:string];
-    outString                   = [outString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    // BUG IN stringByAddingPercentEscapesUsingEncoding
-    // WE NEED TO DO several OURSELVES
-    outString                   = [self replace:outString lookFor:@"&" replaceWith:@"%26"];
-    outString                   = [self replace:outString lookFor:@"?" replaceWith:@"%3F"];
-    outString                   = [self replace:outString lookFor:@"=" replaceWith:@"%3D"];
-    outString                   = [self replace:outString lookFor:@"+" replaceWith:@"%2B"];
-    outString                   = [self replace:outString lookFor:@";" replaceWith:@"%3B"];
+    NSString *outString = [NSString stringWithString:string];
+    outString = [outString stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
     
     return outString;
 }
+
 - (NSString *)replace:(NSString *)originalString lookFor:(NSString *)find replaceWith:(NSString *)replaceWith {
     if ( ! originalString || ! find) {
         return originalString;
@@ -214,44 +207,55 @@
     return [NSString stringWithString: mstring];
 }
 
-//delegates
--(void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    //when page is loaded
-    NSString *currentUrl = webView.request.URL.absoluteString;
-    
-    NSString *successCompare = @"";
-    NSString *failCompare = @"";
-    if(currentUrl.length >= success_url.length){
-        successCompare = [currentUrl substringToIndex:success_url.length];
-    }
-    if(currentUrl.length >= error_url.length){
-        failCompare = [currentUrl substringToIndex:error_url.length];
-    }
-    
-    
-    if([currentUrl rangeOfString:@"status=approved"].location != NSNotFound){
-         NSLog(@"payment success");
-        paymentCallback(SUCCESS);
-    }else if([currentUrl rangeOfString:@"status=declined"].location != NSNotFound){
-        NSLog(@"payment fail");
-        paymentCallback(FAILED);
-    }else if([currentUrl isEqualToString:payUrl]){
-        NSLog(@"payment starting");
-        //start
-    }else{
-        NSLog(@"payment error");
-        paymentCallback(ERROR);
-    }
+#pragma mark - WKNavigationDelegate // Delegates
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+   NSLog(@"didFinishNavigation");
+   
+   //when page is loaded
+   NSString *currentUrl = webView.URL.absoluteString;
+   
+   NSString *successCompare = @"";
+   NSString *failCompare = @"";
+   if(currentUrl.length >= success_url.length){
+       successCompare = [currentUrl substringToIndex:success_url.length];
+   }
+   if(currentUrl.length >= error_url.length){
+       failCompare = [currentUrl substringToIndex:error_url.length];
+   }
+   
+   
+   if([currentUrl rangeOfString:@"status=approved"].location != NSNotFound){
+        NSLog(@"payment success");
+       paymentCallback(SUCCESS);
+   }else if([currentUrl rangeOfString:@"status=declined"].location != NSNotFound){
+       NSLog(@"payment fail");
+       paymentCallback(FAILED);
+   }else if([currentUrl isEqualToString:payUrl]){
+       NSLog(@"payment starting");
+       //start
+   }else{
+       NSLog(@"payment error");
+       paymentCallback(ERROR);
+   }
 }
 
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-    NSLog(@"webview started loading");
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
+   NSLog(@"didReceiveServerRedirectForProvisionalNavigation");
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSLog(@"error is %@", [error localizedDescription]);
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+   NSLog(@"didStartProvisionalNavigation");
 }
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+   NSLog(@"decidePolicyForNavigationAction");
+   decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+   NSLog(@"decidePolicyForNavigationResponse");
+   decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
 @end
