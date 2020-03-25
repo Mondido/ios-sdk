@@ -5,3 +5,6 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 .DS_Store
+
+# Xcode user data
+MondidoIOS-SDK.xcodeproj/xcuserdata/*
