@@ -29,14 +29,14 @@ MondidoBase *mondido;
     mondido.payUrl = @"https://pay.mondido.com/v1/form?lang=en";
     mondido.amount = @"1.00";
     mondido.currency = @"sek"; //must be in lower case
-    mondido.merchant_id = @"470";
-    mondido.secret = @"$2a$10$SZ32pF1xgUek/8UMO/NHzu"; // should not store secret in app.
+    mondido.merchant_id = @"1985";
+    mondido.secret = @"$2a$10$H2kFVNMcFVlhFOodOqGXpu"; // should not store secret in app.
     mondido.payment_ref = @"test1";
     mondido.customer_ref = @"customer1";
     mondido.mondido_hash = @"";
     mondido.success_url = @"https://pay.mondido.com/success";
     mondido.error_url = @"https://pay.mondido.com/fail";
-    mondido.test = @"true";
+    mondido.test = @"false";
     mondido.webhook = @"{\"trigger\":\"payment_success\",\"email\":\"youremail+ios@gmail.com\"}";
     mondido.payment_ref = mondido.randomOrderId; //just for testing. remove in production.
     mondido.mondido_hash = mondido.createHash; //should be loaded from backend

@@ -3,8 +3,8 @@
 //  MondidoIOS-SDK
 //
 //  Created by Robert Pohl on 18/02/14.
-//  Copyright (c) 2014 Mondido Payments. All rights reserved.
-//  Version 1.0
+//  Copyright (c) 2020 Mondido Payments. All rights reserved.
+//  Version 1.4
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
@@ -13,11 +13,10 @@
 typedef enum PaymentStatus : NSInteger PaymentStatus;
 enum PaymentStatus : NSInteger {
    STARTED,
-	SUCCESS,
-	FAILED,
-	ERROR
+   SUCCESS,
+   FAILED,
+   ERROR
 };
-
 
 @interface MondidoBase : NSObject<WKNavigationDelegate, WKUIDelegate>{
 }
@@ -45,7 +44,6 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *authorize;
 @property (nonatomic, retain) NSString *store_card;
 @property (nonatomic, retain) NSString *vat_amount;
-
 
 - (NSString *) md5:NSString;
 - (NSString *) randomOrderId;
