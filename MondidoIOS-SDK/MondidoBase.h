@@ -7,20 +7,21 @@
 //  Version 1.0
 
 #import <Foundation/Foundation.h>
-
+#import <WebKit/WebKit.h>
+#import <WebKit/WKNavigation.h>
 
 typedef enum PaymentStatus : NSInteger PaymentStatus;
 enum PaymentStatus : NSInteger {
-    STARTED,
+   STARTED,
 	SUCCESS,
 	FAILED,
 	ERROR
 };
 
 
-@interface MondidoBase : NSObject<UIWebViewDelegate>{
-
+@interface MondidoBase : NSObject<WKNavigationDelegate, WKUIDelegate>{
 }
+
 @property (nonatomic, retain) NSString *payUrl;
 @property (nonatomic, retain) NSString *amount;
 @property (nonatomic, retain) NSString *currency;
@@ -46,16 +47,13 @@ enum PaymentStatus : NSInteger {
 @property (nonatomic, retain) NSString *vat_amount;
 
 
-
-
 - (NSString *) md5:NSString;
 - (NSString *) randomOrderId;
 - (NSString *) createHash;
-- (UIWebView *) createWebView;
+- (WKWebView *) createWebView;
 
 typedef void (^ASCompletionBlock)(NSInteger status);
 
-- (void)makeHostedPayment:(UIWebView *)webView withCallback:(ASCompletionBlock)callback;
+- (void)makeHostedPayment:(WKWebView *)webView withCallback:(ASCompletionBlock)callback;
 
 @end
-

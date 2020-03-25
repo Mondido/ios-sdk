@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface ViewController : UIViewController <UIWebViewDelegate>{
+@interface ViewController : UIViewController {
 @private
-    IBOutlet UIWebView *paymentView;
+    IBOutlet WKWebView *paymentView;
 }
 
 @end

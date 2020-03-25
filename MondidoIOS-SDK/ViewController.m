@@ -9,8 +9,8 @@
 #import "ViewController.h"
 #import "MondidoBase.h"
 
-@interface ViewController ()
-
+@interface ViewController () <WKNavigationDelegate, WKUIDelegate> {
+}
 @end
 
 @implementation ViewController
